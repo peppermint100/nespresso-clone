@@ -1,17 +1,14 @@
 package io.peppermint100.server.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Entity(name = "CART_TABLE")
 public class Cart {
 

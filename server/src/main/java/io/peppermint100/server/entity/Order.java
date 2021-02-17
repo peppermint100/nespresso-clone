@@ -1,13 +1,13 @@
 package io.peppermint100.server.entity;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Entity(name = "ORDER_TABLE")
 public class Order {
 

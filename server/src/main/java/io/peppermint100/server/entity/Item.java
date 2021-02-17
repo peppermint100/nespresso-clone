@@ -2,14 +2,12 @@ package io.peppermint100.server.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@SuperBuilder
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity(name = "ITEM_TABLE")
@@ -21,7 +19,8 @@ public class Item {
     private String itemName;
     private Integer price;
     private String description;
-    private ArrayList<String> itemImage;
+    private String itemImage;
+    private String itemDetailImage;
 
     @OneToMany(
             mappedBy = "item",

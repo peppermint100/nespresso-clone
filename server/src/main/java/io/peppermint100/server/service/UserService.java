@@ -52,13 +52,19 @@ public class UserService {
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        User newUser = User.builder()
-                .email(email)
-                .firstName(firstName)
-                .lastName(lastName)
-                .password(encodedPassword)
-                .address(address)
-                .build();
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setPassword(encodedPassword);
+        newUser.setAddress(address);
+//        User newUser = User.builder()
+//                .email(email)
+//                .firstName(firstName)
+//                .lastName(lastName)
+//                .password(encodedPassword)
+//                .address(address)
+//                .build();
 
         userRepository.save(newUser);
     }
@@ -69,7 +75,7 @@ public class UserService {
 
         Optional<User> user = userRepository.findByEmail(email);
 
-        if(!user.isPresent()){
+        if(user.isEmpty()){
             throw new UserNotExistException();
         }
 

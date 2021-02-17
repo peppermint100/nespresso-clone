@@ -2,11 +2,12 @@ package io.peppermint100.server.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-@Builder
+@NoArgsConstructor
 @Entity(name = "CART_ITEM_TABLE")
 public class CartItem {
 

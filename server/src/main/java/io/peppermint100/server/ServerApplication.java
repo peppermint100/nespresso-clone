@@ -4,10 +4,14 @@ import io.peppermint100.server.constant.CapsuleItem;
 import io.peppermint100.server.constant.MachineItem;
 import io.peppermint100.server.entity.Capsule;
 import io.peppermint100.server.entity.Machine;
+import io.peppermint100.server.repository.CapsuleRepository;
 import io.peppermint100.server.repository.ItemRepository;
+import io.peppermint100.server.repository.MachineRepository;
+import org.apache.catalina.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -18,10 +22,10 @@ import java.util.stream.Stream;
 public class ServerApplication {
 
 	@Autowired
-	private ItemRepository<Capsule> capsuleItemRepository;
+	private CapsuleRepository capsuleRepository;
 
 	@Autowired
-	private ItemRepository<Machine> machineItemRepository;
+	private MachineRepository machineRepository;
 
 	@PostConstruct
 	public void initializeItem(){
@@ -125,11 +129,17 @@ public class ServerApplication {
 				essenzaMiniMachine, pixieMachine, citizMachine, vertuoPlusMachine
 		).collect(Collectors.toList());
 
-		capsuleItemRepository.saveAll(capsuleList);
-		machineItemRepository.saveAll(machineList);
+		capsuleRepository.saveAll(capsuleList);
+		machineRepository.saveAll(machineList);
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServerApplication.class, args);
+
+//	    SpringApplication.run(Server.class, args);
+		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(ServerApplication.class, args);
+
+//		ItemRepository itemRepository = configurableApplicationContext.getBean(ItemRepository.class);
+//		ItemRepository capsuleRepository = configurableApplicationContext.getBean(CapsuleRepository.class);
+//		ItemRepository machineRepository = configurableApplicationContext.getBean(MachineRepository.class);
 	}
 }

@@ -38,16 +38,16 @@ public class Cart {
 
     private Integer totalPrice;
 
-    @PostLoad()
-    public void setTotal(){
-        final Integer[] total = {0};
-        this.cartItem.stream().forEach(cartItem -> {
-            Integer price = cartItem.getItem().getPrice();
-            Integer amount = cartItem.getAmount();
-
-            total[0] += price * amount;
-        });
-
-        this.setTotalPrice(total[0]);
-    }
+//    @PostLoad()
+//    public void setTotal(){
+//        final Integer[] total = {0};
+//        this.cartItem.stream().forEach(cartItem -> {
+//            Integer price = cartItem.getItem().getPrice();
+//            Integer amount = cartItem.getAmount();
+//
+//            total[0] += price * amount;
+//        });
+//
+//        this.setTotalPrice(total[0]);
+//    }
 }

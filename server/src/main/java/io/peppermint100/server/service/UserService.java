@@ -3,13 +3,13 @@ package io.peppermint100.server.service;
 import io.peppermint100.server.entity.CustomUserDetails;
 import io.peppermint100.server.entity.Request.User.LoginRequest;
 import io.peppermint100.server.entity.Request.User.SignUpRequest;
+import io.peppermint100.server.entity.Request.User.UpdateAddressRequest;
+import io.peppermint100.server.entity.Request.User.UpdateUserInfoRequest;
+import io.peppermint100.server.entity.Response.BasicResponse;
 import io.peppermint100.server.entity.Response.User.UserInfo;
 import io.peppermint100.server.entity.User;
 import io.peppermint100.server.exception.EmptyValueExistException;
-import io.peppermint100.server.exception.User.LoginFailException;
-import io.peppermint100.server.exception.User.PasswordNotMatchException;
-import io.peppermint100.server.exception.User.UserAlreadyExistException;
-import io.peppermint100.server.exception.User.UserNotExistException;
+import io.peppermint100.server.exception.User.*;
 import io.peppermint100.server.repository.UserRepository;
 import io.peppermint100.server.util.JwtUtil;
 import lombok.AllArgsConstructor;
@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,13 +59,6 @@ public class UserService {
         newUser.setLastName(lastName);
         newUser.setPassword(encodedPassword);
         newUser.setAddress(address);
-//        User newUser = User.builder()
-//                .email(email)
-//                .firstName(firstName)
-//                .lastName(lastName)
-//                .password(encodedPassword)
-//                .address(address)
-//                .build();
 
         userRepository.save(newUser);
     }
@@ -96,19 +90,12 @@ public class UserService {
         return token;
     }
 
-    public UserInfo me(String token) {
+    public UserInfo me() {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         String email = userDetails.getEmail();
-
-        String parsedToken = token.substring(7);
-
-        boolean isValidateToken = jwtUtil.validateToken(parsedToken, email);
-
-        if (!isValidateToken) {
-            throw new UserNotExistException();
-        }
 
         UserInfo userInfo = null;
 
@@ -127,5 +114,57 @@ public class UserService {
         );
 
         return userInfo;
+    }
+
+    public void updateUserInfo(Long userId, UpdateUserInfoRequest updateUserInfoRequest) {
+
+        Optional<String> firstName = Optional.ofNullable(updateUserInfoRequest.getFirstName());
+        Optional<String> lastName = Optional.ofNullable(updateUserInfoRequest.getLastName());
+        Optional<String> email = Optional.ofNullable(updateUserInfoRequest.getEmail());
+        Optional<String> confirmEmail = Optional.ofNullable(updateUserInfoRequest.getConfirmEmail());
+
+        if(
+                email.isPresent() ^ confirmEmail.isPresent() ||
+                email.isPresent() && confirmEmail.isPresent() && !email.equals(confirmEmail)
+        ){
+            throw new EmailNotMatchException();
+        }
+
+        User user = userRepository.findById(userId).orElseThrow(UserNotExistException::new);
+
+        if(firstName.isPresent() && firstName.get().length() > 0){
+            user.setFirstName(firstName.get());
+        }
+
+        if(lastName.isPresent() && lastName.get().length() > 0){
+            user.setLastName(lastName.get());
+        }
+
+        if(email.isPresent() && email.get().length() > 0){
+            user.setEmail(email.get());
+        }
+
+        userRepository.save(user);
+    }
+
+    public void updateAddress(UpdateAddressRequest updateAddressRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        String address = updateAddressRequest.getAddress();
+
+        // address 값 비어있음 에러
+        if (address.length() <= 0){
+            throw new EmptyValueExistException();
+        }
+
+        Long userId = userDetails.getUserId();
+
+        // 유저 없음 에러
+        User user = userRepository.findById(userId).orElseThrow(UserNotExistException::new);
+
+        user.setAddress(address);
+
+        userRepository.save(user);
     }
 }

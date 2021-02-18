@@ -1,10 +1,9 @@
 package io.peppermint100.server.exception;
 
 import io.peppermint100.server.constant.ExceptionMessage;
-import io.peppermint100.server.exception.User.LoginFailException;
-import io.peppermint100.server.exception.User.PasswordNotMatchException;
-import io.peppermint100.server.exception.User.UserAlreadyExistException;
-import io.peppermint100.server.exception.User.UserNotExistException;
+import io.peppermint100.server.exception.Item.FailToGetAllCapsulesException;
+import io.peppermint100.server.exception.Item.FailToGetAllMachinesException;
+import io.peppermint100.server.exception.User.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -79,6 +78,63 @@ public class ApiExceptionHandler {
 
         ApiException apiException = new ApiException(
                 ExceptionMessage.LOG_IN_FAIL_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {EmailNotMatchException.class})
+    public ResponseEntity<Object> handleLoginFailException(EmailNotMatchException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.EMAIL_NOT_MATCH_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+
+    @ExceptionHandler(value = {TestException.class})
+    public ResponseEntity<Object> handleTextException(TestException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                "테스트 예외 입니다.",
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {FailToGetAllCapsulesException.class})
+    public ResponseEntity<Object> handleFailToGetAllCapsulesException(FailToGetAllCapsulesException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.GET_ALL_CAPSULES_FAIL_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {FailToGetAllMachinesException.class})
+    public ResponseEntity<Object> handleFailToGetAllMachinesException(FailToGetAllMachinesException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.GET_ALL_MACHINES_FAIL_MESSAGE,
                 httpStatus,
                 ZonedDateTime.now(ZoneId.of("Z"))
         );

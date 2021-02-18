@@ -2,9 +2,12 @@ package io.peppermint100.server.util;
 
 import io.jsonwebtoken.*;
 import io.peppermint100.server.exception.EmptyValueExistException;
+import io.peppermint100.server.exception.TestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +23,7 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public String getUserEmail(String token){
+    public String getUserEmail(String token) {
         try{
             String email = Jwts.parser()
                     .setSigningKey(secret)
@@ -47,6 +50,7 @@ public class JwtUtil {
             Claims body = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
             return body;
         }catch(JwtException e){
+
             throw new EmptyValueExistException();
         }
     }

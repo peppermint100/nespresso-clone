@@ -11,6 +11,8 @@ import java.io.IOException;
 public class AuthenticationExceptionHandler implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
+        System.out.println("caught by authentication entry point");
         httpServletResponse.sendRedirect("/exception/jwt");
+        return;
     }
 }

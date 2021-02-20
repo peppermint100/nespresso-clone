@@ -1,9 +1,12 @@
 package io.peppermint100.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,10 +25,11 @@ public abstract class Item {
     private String itemImage;
     private String itemDetailImage;
 
-//    @OneToMany(
-//            mappedBy = "item",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true
-//    )
-//    private List<CartItem> cartItem = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "item",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<CartItem> cartItem = new ArrayList<>();
 }

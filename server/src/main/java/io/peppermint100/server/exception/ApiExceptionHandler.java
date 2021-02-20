@@ -3,6 +3,8 @@ package io.peppermint100.server.exception;
 import io.peppermint100.server.constant.ExceptionMessage;
 import io.peppermint100.server.exception.Item.FailToGetAllCapsulesException;
 import io.peppermint100.server.exception.Item.FailToGetAllMachinesException;
+import io.peppermint100.server.exception.Item.FailToGetItemException;
+import io.peppermint100.server.exception.Item.ItemNotExistException;
 import io.peppermint100.server.exception.User.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -135,6 +137,48 @@ public class ApiExceptionHandler {
 
         ApiException apiException = new ApiException(
                 ExceptionMessage.GET_ALL_MACHINES_FAIL_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {FailToGetItemException.class})
+    public ResponseEntity<Object> handleFailToGetItemException(FailToGetItemException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.GET_ITEM_BY_ITEM_ID_FAIL_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {ItemNotExistException.class})
+    public ResponseEntity<Object> handleItemNotExistException(ItemNotExistException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.ITEM_NOT_EXIST_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {UnexceptableValueException.class})
+    public ResponseEntity<Object> handleUnexceptableValueException(UnexceptableValueException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.UNEXCEPTABLE_VALUE_EXCEPTION_MESSAGE,
                 httpStatus,
                 ZonedDateTime.now(ZoneId.of("Z"))
         );

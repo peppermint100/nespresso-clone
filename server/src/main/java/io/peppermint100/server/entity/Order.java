@@ -16,11 +16,11 @@ public class Order {
     private Long orderId;
 
     private Date orderDate;
-
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            mappedBy = "order",
-            fetch = FetchType.LAZY
-    )
-    private Cart cart;
+//
+//    @OneToOne(
+//            cascade = CascadeType.ALL,
+//            mappedBy = "order",
+//            fetch = FetchType.LAZY
+//    )
+//    private Cart cart;
 }

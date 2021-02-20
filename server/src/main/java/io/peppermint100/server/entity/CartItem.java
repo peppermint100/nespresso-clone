@@ -1,6 +1,5 @@
 package io.peppermint100.server.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,11 +15,17 @@ public class CartItem {
 
     private Integer amount;
 
-//    @ManyToOne()
-//    @JoinColumn(name = "item_id")
-//    private Item item;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToOne()
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
+
+    public CartItem(User user, Integer amount, Item item) {
+        this.user = user;
+        this.amount = amount;
+        this.item = item;
+    }
 }

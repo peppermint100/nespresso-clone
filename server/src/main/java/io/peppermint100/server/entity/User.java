@@ -1,11 +1,15 @@
 package io.peppermint100.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,10 +25,19 @@ public class User {
     private String password;
     private String address;
 
-    @OneToOne(
-            cascade = CascadeType.ALL,
+    @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.LAZY
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private Cart cart;
+    @JsonIgnore
+    private List<CartItem> cartItems = new ArrayList<>();
+
+    public User(String email, String firstName, String lastName, String password, String address) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.address = address;
+    }
 }

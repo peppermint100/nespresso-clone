@@ -7,13 +7,12 @@ import io.peppermint100.server.entity.Item;
 import io.peppermint100.server.entity.Machine;
 import io.peppermint100.server.entity.Response.Item.GetAllCapsulesResponse;
 import io.peppermint100.server.entity.Response.Item.GetAllMachinesResponse;
+import io.peppermint100.server.entity.Response.Item.GetItemByItemIdResponse;
 import io.peppermint100.server.service.ItemService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +40,16 @@ public class ItemController {
         List<Machine> machineList = itemService.getAllMachines();
 
         GetAllMachinesResponse response = new GetAllMachinesResponse(HttpStatus.OK, Controller.GET_ALL_MACHINE_SUCCESS_MESSAGE, machineList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // get item by item id
+    @GetMapping("/{itemId}")
+    public ResponseEntity<GetItemByItemIdResponse> getItemByItemId(@PathVariable("itemId") Long itemId){
+        Item item = itemService.getItemByItemId(itemId);
+
+        GetItemByItemIdResponse response = new GetItemByItemIdResponse(HttpStatus.OK, Controller.GET_ITEM_BY_ITEM_ID_SUCCESS_MESSAGE, item);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

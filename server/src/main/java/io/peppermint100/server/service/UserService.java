@@ -5,7 +5,6 @@ import io.peppermint100.server.entity.Request.User.LoginRequest;
 import io.peppermint100.server.entity.Request.User.SignUpRequest;
 import io.peppermint100.server.entity.Request.User.UpdateAddressRequest;
 import io.peppermint100.server.entity.Request.User.UpdateUserInfoRequest;
-import io.peppermint100.server.entity.Response.BasicResponse;
 import io.peppermint100.server.entity.Response.User.UserInfo;
 import io.peppermint100.server.entity.User;
 import io.peppermint100.server.exception.EmptyValueExistException;
@@ -17,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,12 +51,7 @@ public class UserService {
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        User newUser = new User();
-        newUser.setEmail(email);
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setPassword(encodedPassword);
-        newUser.setAddress(address);
+        User newUser = new User(email, firstName, lastName, encodedPassword, address);
 
         userRepository.save(newUser);
     }

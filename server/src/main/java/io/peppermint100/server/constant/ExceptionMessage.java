@@ -15,4 +15,6 @@ public class ExceptionMessage {
     public static final String GET_ITEM_BY_ITEM_ID_FAIL_MESSAGE = "제품 정보를 불러오지 못했습니다.";
     public static final String ITEM_NOT_EXIST_MESSAGE = "존재하지 않는 제품입니다.";
     public static final String UNEXCEPTABLE_VALUE_EXCEPTION_MESSAGE = "유효하지 않은 값입니다.";
+    public static final String GET_ORDER_FAIL_MESSAGE = "주문 정보를 불러오는데 실패했습니다.";
+    public static final String EMPTY_CART_EXCEPTION_MESSAGE = "장바구니가 비어있습니다.";
 }

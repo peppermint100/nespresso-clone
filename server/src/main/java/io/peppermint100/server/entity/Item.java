@@ -32,4 +32,12 @@ public abstract class Item {
     )
     @JsonIgnore
     private List<CartItem> cartItem = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "item",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<OrderItem> orderItem = new ArrayList<>();
 }

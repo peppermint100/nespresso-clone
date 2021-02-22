@@ -10,4 +10,6 @@ public class Controller {
     public static final String GET_CART_SUCCESS_MESSAGE = "장바구니 정보를 불러오는데 성공했습니다.";
     public static final String GET_ITEM_BY_ITEM_ID_SUCCESS_MESSAGE = "제품 정보를 불러오는데 성공했습니다.";
     public static final String UPDATE_CART_SUCCESS_MESSAGE = "성공적으로 장바구니를 업데이트 했습니다.";
+    public static final String GET_ORDER_SUCCESS_MESSAGE = "성공적으로 주문 정보를 불러왔습니다.";
+    public static final String MAKE_ORDER_SUCCESS_MESSAGE = "주문을 완료하였습니다.";
 }

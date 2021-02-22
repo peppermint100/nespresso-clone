@@ -5,6 +5,8 @@ import io.peppermint100.server.exception.Item.FailToGetAllCapsulesException;
 import io.peppermint100.server.exception.Item.FailToGetAllMachinesException;
 import io.peppermint100.server.exception.Item.FailToGetItemException;
 import io.peppermint100.server.exception.Item.ItemNotExistException;
+import io.peppermint100.server.exception.Order.EmptyCartException;
+import io.peppermint100.server.exception.Order.FailToGetOrderException;
 import io.peppermint100.server.exception.User.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -179,6 +181,34 @@ public class ApiExceptionHandler {
 
         ApiException apiException = new ApiException(
                 ExceptionMessage.UNEXCEPTABLE_VALUE_EXCEPTION_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {FailToGetOrderException.class})
+    public ResponseEntity<Object> handleFailToGetOrderException(FailToGetOrderException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.GET_ORDER_FAIL_MESSAGE,
+                httpStatus,
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = {EmptyCartException.class})
+    public ResponseEntity<Object> handleEmptyCartException(EmptyCartException e){
+
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiException apiException = new ApiException(
+                ExceptionMessage.EMPTY_CART_EXCEPTION_MESSAGE,
                 httpStatus,
                 ZonedDateTime.now(ZoneId.of("Z"))
         );

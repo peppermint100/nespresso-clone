@@ -1,9 +1,7 @@
 package io.peppermint100.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,6 +30,14 @@ public class User {
     )
     @JsonIgnore
     private List<CartItem> cartItems = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<OrderItem> orderList = new ArrayList<>();
 
     public User(String email, String firstName, String lastName, String password, String address) {
         this.email = email;

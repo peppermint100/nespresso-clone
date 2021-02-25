@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Basic;
 import java.util.Optional;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class UserController {

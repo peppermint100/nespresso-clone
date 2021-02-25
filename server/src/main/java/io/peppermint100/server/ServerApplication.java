@@ -30,16 +30,16 @@ public class ServerApplication {
 	@PostConstruct
 	public void initializeItem(){
 		Capsule indonesiaCapsule = new Capsule();
-		indonesiaCapsule.setItemName(CapsuleItem.INDIA_ITEM_NAME);
-		indonesiaCapsule.setPrice(CapsuleItem.INDIA_PRICE);
-		indonesiaCapsule.setDescription(CapsuleItem.INDIA_DESCRIPTION);
-		indonesiaCapsule.setItemImage(CapsuleItem.INDIA_ITEM_IMAGE);
-		indonesiaCapsule.setItemDetailImage(CapsuleItem.INDIA_ITEM_DETAIL_IMAGE);
-		indonesiaCapsule.setIntensity(CapsuleItem.INDIA_INTENSITY);
-		indonesiaCapsule.setCupSize(CapsuleItem.INDIA_CUP_SIZE);
-		indonesiaCapsule.setProfile(CapsuleItem.INDIA_PROFILE);
-		indonesiaCapsule.setNote(CapsuleItem.INDIA_NOTE);
-		indonesiaCapsule.setOrigin(CapsuleItem.INDIA_ORIGIN);
+		indonesiaCapsule.setItemName(CapsuleItem.INDONESIA_ITEM_NAME);
+		indonesiaCapsule.setPrice(CapsuleItem.INDONESIA_PRICE);
+		indonesiaCapsule.setDescription(CapsuleItem.INDONESIA_DESCRIPTION);
+		indonesiaCapsule.setItemImage(CapsuleItem.INDONESIA_ITEM_IMAGE);
+		indonesiaCapsule.setItemDetailImage(CapsuleItem.INDONESIA_ITEM_DETAIL_IMAGE);
+		indonesiaCapsule.setIntensity(CapsuleItem.INDONESIA_INTENSITY);
+		indonesiaCapsule.setCupSize(CapsuleItem.INDONESIA_CUP_SIZE);
+		indonesiaCapsule.setProfile(CapsuleItem.INDONESIA_PROFILE);
+		indonesiaCapsule.setNote(CapsuleItem.INDONESIA_NOTE);
+		indonesiaCapsule.setOrigin(CapsuleItem.INDONESIA_ORIGIN);
 
 		Capsule ristrettoCapsule = new Capsule();
 		ristrettoCapsule.setItemName(CapsuleItem.RISTRETTO_ITEM_NAME);
@@ -134,12 +134,6 @@ public class ServerApplication {
 	}
 
 	public static void main(String[] args) {
-
-//	    SpringApplication.run(Server.class, args);
 		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(ServerApplication.class, args);
-
-//		ItemRepository itemRepository = configurableApplicationContext.getBean(ItemRepository.class);
-//		ItemRepository capsuleRepository = configurableApplicationContext.getBean(CapsuleRepository.class);
-//		ItemRepository machineRepository = configurableApplicationContext.getBean(MachineRepository.class);
 	}
 }

@@ -6,3 +6,8 @@ export type SignUpRequest = {
     confirmPassword: string;
     address: string;
 };
+
+export type LoginRequest = {
+    email: string,
+    password: string
+}

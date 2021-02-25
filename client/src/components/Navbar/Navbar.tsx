@@ -82,6 +82,7 @@ const Navbar: React.FC<Props> = ({ width }) => {
                                     >
                                         {menuInfo.map((menu) => (
                                             <Link
+                                                key={menu.text}
                                                 to={menu.to}
                                                 style={{
                                                     color:
@@ -120,7 +121,7 @@ const Navbar: React.FC<Props> = ({ width }) => {
                     <Grid xs={5} item className={classes.navTopRight}>
                         <div className={classes.buttonContainer}>
                             {navTopRightMenuInfo.map((menu) => (
-                                <Link to={menu.to}>
+                                <Link to={menu.to} key={menu.text}>
                                     <Button
                                         variant="outlined"
                                         className={classes.buttonStyle}
@@ -141,7 +142,10 @@ const Navbar: React.FC<Props> = ({ width }) => {
                         color="secondary"
                     >
                         {menuInfo.map((menu) => (
-                            <Button className={classes.menuButtonStyle}>
+                            <Button
+                                className={classes.menuButtonStyle}
+                                key={menu.text}
+                            >
                                 <Link to={menu.to} style={{ color: "#fff" }}>
                                     {isWidthDown("sm", width)
                                         ? menu.icon

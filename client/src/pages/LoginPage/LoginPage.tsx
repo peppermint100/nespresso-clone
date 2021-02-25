@@ -1,13 +1,20 @@
 import { Button, Paper, TextField } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PageContainer from "../../components/Container/PageContainer/PageContainer";
 import * as Yup from "yup";
 import useStyles from "./styles";
+import { LoginRequest } from "../../types/Request";
+import { ErrorResponse, LoginResponse } from "../../types/Response";
+import { api, cookie } from "../../lib/axios";
+import { showMessage } from "../../redux/actions/MessageAction";
+import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -15,6 +22,20 @@ const LoginPage = () => {
             .required("이메일은 필수 항목입니다."),
         password: Yup.string().required("비밀번호는 필수 항목입니다."),
     });
+
+    const loginRequest = (data: LoginRequest) => {
+        // use promise cuz in typescript does not support err in catch phraise type yet
+        api.post("/user/login", data)
+            .then((r) => r.data as LoginResponse)
+            .then((response) => {
+                cookie.set("X-TOKEN", response.token);
+                dispatch(showMessage(response.message, "info"));
+                history.push("/");
+            })
+            .catch((err: ErrorResponse) => {
+                dispatch(showMessage(err.response.data.message, "warning"));
+            });
+    };
 
     return (
         <PageContainer>
@@ -25,16 +46,18 @@ const LoginPage = () => {
                     validationSchema={validationSchema}
                     onSubmit={(data) => {
                         console.log(data);
+                        loginRequest(data);
                     }}
                 >
-                    {({ errors, touched }) => (
+                    {({ handleChange, errors, touched }) => (
                         <Form className={classes.formContainer}>
                             <Field
                                 as={TextField}
-                                id="standard-full-width"
                                 name="email"
                                 label="E-Mail"
                                 fullWidth
+                                helperText={touched.email && errors.email}
+                                onChange={handleChange}
                                 variant="outlined"
                                 type="text"
                                 className={classes.textInput}
@@ -44,20 +67,17 @@ const LoginPage = () => {
                                 name="password"
                                 label="Password"
                                 type="password"
+                                helperText={touched.password && errors.password}
+                                onChange={handleChange}
                                 variant="outlined"
                                 fullWidth
                                 className={classes.textInput}
                             />
-                            <div className={classes.textInput}>
-                                <p className={classes.errorText}>
-                                    {touched.email && errors.email}
-                                </p>
-                                <p className={classes.errorText}>
-                                    {touched.password && errors.password}
-                                </p>
-                            </div>
                             <div className={classes.buttonContainer}>
-                                <Button className={classes.buttonStyle}>
+                                <Button
+                                    type="submit"
+                                    className={classes.buttonStyle}
+                                >
                                     로그인
                                 </Button>
                             </div>

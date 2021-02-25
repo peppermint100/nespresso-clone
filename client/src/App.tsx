@@ -4,7 +4,12 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import CartPage from "./pages/CartPage/CartPage";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { createMuiTheme, Snackbar, ThemeProvider } from "@material-ui/core";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { hideMessage } from "./redux/actions/MessageAction";
+import MuiAlert from "@material-ui/lab/Alert";
+import { RootReducerType } from "./redux/reducers/rootReducer";
 
 function App() {
     const theme = createMuiTheme({
@@ -16,16 +21,38 @@ function App() {
                 main: "#535c68",
                 // light: "#bdc3c7",
             },
-            success: {
-                main: "#27ae60",
-                light: "#2ecc71",
-            },
         },
     });
+
+    const message = useSelector((state: RootReducerType) => state.message);
+
+    const dispatch = useDispatch();
+
+    const closeMessage = () => {
+        dispatch(hideMessage());
+    };
 
     return (
         <div>
             <ThemeProvider theme={theme}>
+                {message.open && (
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "center",
+                        }}
+                        open={message.open}
+                        autoHideDuration={5000}
+                        onClose={closeMessage}
+                    >
+                        <MuiAlert
+                            onClose={closeMessage}
+                            severity={message.severity}
+                        >
+                            {message.message}
+                        </MuiAlert>
+                    </Snackbar>
+                )}
                 <Router>
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/login" component={LoginPage} />

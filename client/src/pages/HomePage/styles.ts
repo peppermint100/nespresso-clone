@@ -55,10 +55,10 @@ const useStyles = makeStyles((theme) => ({
     },
     explorationText: {
         color: "#fff",
-        fontSize: "28px",
+        fontSize: "24px",
         letterSpacing: "2px",
         textAlign: "center",
-        marginBottom: "15px",
+        marginBottom: "18px",
         transform: "translateY(-200%)",
         [theme.breakpoints.down("md")]: {
             fontSize: "20px",

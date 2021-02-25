@@ -55,10 +55,6 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.grey[900],
         },
     },
-    errorText: {
-        color: theme.palette.error.main,
-        fontSize: "14px",
-    },
 }));
 
 export default useStyles

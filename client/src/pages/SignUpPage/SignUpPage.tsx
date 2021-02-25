@@ -7,9 +7,15 @@ import * as Yup from "yup";
 import useStyles from "./styles";
 
 import { SignUpRequest } from "../../types/Request";
+import { useDispatch } from "react-redux";
+import { showMessage } from "../../redux/actions/MessageAction";
+import { api } from "../../lib/axios";
+import { BasicResponse, ErrorResponse } from "../../types/Response";
 
 const SignUpPage = () => {
     const classes = useStyles();
+
+    const dispatch = useDispatch();
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -23,6 +29,18 @@ const SignUpPage = () => {
             .required("비밀번호 확인은 필수 항목입니다."),
         address: Yup.string().required("주소은 필수 항목입니다."),
     });
+
+    const signUpRequest = (data: SignUpRequest) => {
+        // use promise cuz in typescript does not support err in catch phraise type yet
+        api.post("/user/signup", data)
+            .then((r) => r.data as BasicResponse)
+            .then((response) => {
+                dispatch(showMessage(response.message, "info"));
+            })
+            .catch((err: ErrorResponse) => {
+                dispatch(showMessage(err.response.data.message, "warning"));
+            });
+    };
 
     return (
         <PageContainer>
@@ -38,26 +56,18 @@ const SignUpPage = () => {
                         address: "",
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={(data: SignUpRequest) => {
-                        const {
-                            email,
-                            firstName,
-                            lastName,
-                            password,
-                            confirmPassword,
-                            address,
-                        } = data;
-                    }}
+                    onSubmit={signUpRequest}
                 >
-                    {({ errors, touched, values }) => (
+                    {({ handleChange, errors, touched }) => (
                         <Form className={classes.formContainer}>
                             <Field
                                 as={TextField}
-                                id="standard-full-width"
                                 name="email"
                                 label="E-Mail"
                                 fullWidth
                                 variant="outlined"
+                                onChange={handleChange}
+                                helperText={touched.email && errors.email}
                                 type="text"
                                 className={classes.textInput}
                             />
@@ -66,6 +76,9 @@ const SignUpPage = () => {
                                 name="firstName"
                                 label="First Name"
                                 type="text"
+                                helperText={
+                                    touched.firstName && errors.firstName
+                                }
                                 variant="outlined"
                                 fullWidth
                                 className={classes.textInput}
@@ -76,6 +89,7 @@ const SignUpPage = () => {
                                 label="Last Name"
                                 type="text"
                                 variant="outlined"
+                                helperText={touched.lastName && errors.lastName}
                                 fullWidth
                                 className={classes.textInput}
                             />
@@ -85,6 +99,7 @@ const SignUpPage = () => {
                                 label="Password"
                                 type="password"
                                 variant="outlined"
+                                helperText={touched.password && errors.password}
                                 fullWidth
                                 className={classes.textInput}
                             />
@@ -94,6 +109,10 @@ const SignUpPage = () => {
                                 label="Password Confirm"
                                 type="password"
                                 variant="outlined"
+                                helperText={
+                                    touched.confirmPassword &&
+                                    errors.confirmPassword
+                                }
                                 fullWidth
                                 className={classes.textInput}
                             />
@@ -103,32 +122,15 @@ const SignUpPage = () => {
                                 label="Address"
                                 type="text"
                                 variant="outlined"
+                                helperText={touched.address && errors.address}
                                 fullWidth
                                 className={classes.textInput}
                             />
-                            <div className={classes.textInput}>
-                                <p className={classes.errorText}>
-                                    {touched.email && errors.email}
-                                </p>
-                                <p className={classes.errorText}>
-                                    {touched.firstName && errors.firstName}
-                                </p>
-                                <p className={classes.errorText}>
-                                    {touched.lastName && errors.lastName}
-                                </p>
-                                <p className={classes.errorText}>
-                                    {touched.password && errors.password}
-                                </p>
-                                <p className={classes.errorText}>
-                                    {touched.confirmPassword &&
-                                        errors.confirmPassword}
-                                </p>
-                                <p className={classes.errorText}>
-                                    {touched.address && errors.address}
-                                </p>
-                            </div>
                             <div className={classes.buttonContainer}>
-                                <Button className={classes.buttonStyle}>
+                                <Button
+                                    type="submit"
+                                    className={classes.buttonStyle}
+                                >
                                     회원가입
                                 </Button>
                             </div>

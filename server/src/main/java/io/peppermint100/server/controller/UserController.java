@@ -9,6 +9,7 @@ import io.peppermint100.server.entity.Request.User.UpdateUserInfoRequest;
 import io.peppermint100.server.entity.Response.BasicResponse;
 import io.peppermint100.server.entity.Response.TokenContainingResponse;
 import io.peppermint100.server.entity.Response.User.MeResponse;
+import io.peppermint100.server.entity.Response.User.TokenAndUser;
 import io.peppermint100.server.entity.Response.User.UserInfo;
 import io.peppermint100.server.service.UserService;
 import org.apache.coyote.Response;
@@ -18,9 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import java.util.Optional;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -30,9 +31,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenContainingResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
-        String token = userService.loginAndGenerateToken(loginRequest);
+        TokenAndUser tokenAndUser = userService.loginAndGenerateToken(loginRequest);
 
-        TokenContainingResponse response = new TokenContainingResponse(HttpStatus.OK, Controller.LOG_IN_SUCCESS_MESSAGE, token);
+        TokenContainingResponse response = new TokenContainingResponse(HttpStatus.OK, Controller.LOG_IN_SUCCESS_MESSAGE, tokenAndUser.getToken(), tokenAndUser.getUser());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

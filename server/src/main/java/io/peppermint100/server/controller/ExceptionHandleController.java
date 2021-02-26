@@ -1,10 +1,7 @@
 package io.peppermint100.server.controller;
 
 import io.peppermint100.server.exception.User.UserNotExistException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/exception")

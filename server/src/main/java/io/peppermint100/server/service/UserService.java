@@ -5,6 +5,7 @@ import io.peppermint100.server.entity.Request.User.LoginRequest;
 import io.peppermint100.server.entity.Request.User.SignUpRequest;
 import io.peppermint100.server.entity.Request.User.UpdateAddressRequest;
 import io.peppermint100.server.entity.Request.User.UpdateUserInfoRequest;
+import io.peppermint100.server.entity.Response.User.TokenAndUser;
 import io.peppermint100.server.entity.Response.User.UserInfo;
 import io.peppermint100.server.entity.User;
 import io.peppermint100.server.exception.EmptyValueExistException;
@@ -56,7 +57,7 @@ public class UserService {
         userRepository.save(newUser);
     }
 
-    public String loginAndGenerateToken(LoginRequest loginRequest) throws Exception {
+    public TokenAndUser loginAndGenerateToken(LoginRequest loginRequest) throws Exception {
         String email = Optional.ofNullable(loginRequest.getEmail()).orElseThrow(EmptyValueExistException::new);
         String password = Optional.ofNullable(loginRequest.getPassword()).orElseThrow(EmptyValueExistException::new);
 
@@ -80,7 +81,19 @@ public class UserService {
 
         String token = jwtUtil.generateToken(email);
 
-        return token;
+        User userExist = user.get();
+
+        UserInfo userInfo = new UserInfo(
+                userExist.getUserId(),
+                userExist.getEmail(),
+                userExist.getFirstName(),
+                userExist.getLastName(),
+                userExist.getAddress()
+        );
+
+        TokenAndUser tokenAndUser = new TokenAndUser(token, userInfo);
+
+        return tokenAndUser;
     }
 
     public UserInfo me() {

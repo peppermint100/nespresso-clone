@@ -1,7 +1,7 @@
 import { Button, Paper, TextField } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PageContainer from "../../components/Container/PageContainer/PageContainer";
 import * as Yup from "yup";
 import useStyles from "./styles";
@@ -9,13 +9,14 @@ import useStyles from "./styles";
 import { SignUpRequest } from "../../types/Request";
 import { useDispatch } from "react-redux";
 import { showMessage } from "../../redux/actions/MessageAction";
-import { api } from "../../lib/axios";
 import { BasicResponse, ErrorResponse } from "../../types/Response";
+import axios from "axios";
+import { axiosConfigs } from "../../configs/axios";
 
 const SignUpPage = () => {
     const classes = useStyles();
-
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -32,13 +33,17 @@ const SignUpPage = () => {
 
     const signUpRequest = (data: SignUpRequest) => {
         // use promise cuz in typescript does not support err in catch phraise type yet
-        api.post("/user/signup", data)
+        axios
+            .post("/user/signup", data, axiosConfigs)
             .then((r) => r.data as BasicResponse)
             .then((response) => {
                 dispatch(showMessage(response.message, "info"));
+                history.push("/login");
             })
             .catch((err: ErrorResponse) => {
-                dispatch(showMessage(err.response.data.message, "warning"));
+                if (err.response) {
+                    dispatch(showMessage(err.response.data.message, "warning"));
+                }
             });
     };
 

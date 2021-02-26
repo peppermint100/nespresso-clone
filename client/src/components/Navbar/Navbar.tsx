@@ -25,6 +25,8 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import useStyles from "./style";
+import { useSelector } from "react-redux";
+import { RootReducerType } from "../../redux/reducers/rootReducer";
 
 interface Props {
     width: Breakpoint;
@@ -34,18 +36,7 @@ const Navbar: React.FC<Props> = ({ width }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [drawerState, setDrawerState] = useState(false);
-    const navTopRightMenuInfo = [
-        {
-            icon: <PersonOutlined />,
-            text: "로그인",
-            to: "/login",
-        },
-        {
-            icon: <ShoppingCartOutlined />,
-            text: "장바구니",
-            to: "/cart",
-        },
-    ];
+    const user = useSelector((state: RootReducerType) => state.user);
 
     const menuInfo = [
         {
@@ -120,18 +111,48 @@ const Navbar: React.FC<Props> = ({ width }) => {
                     <Grid xs={5} item />
                     <Grid xs={5} item className={classes.navTopRight}>
                         <div className={classes.buttonContainer}>
-                            {navTopRightMenuInfo.map((menu) => (
-                                <Link to={menu.to} key={menu.text}>
+                            {user && !!!user.isAuthenticated ? (
+                                <Link to="/login">
                                     <Button
                                         variant="outlined"
                                         className={classes.buttonStyle}
                                     >
-                                        {isWidthDown("sm", width)
-                                            ? menu.icon
-                                            : menu.text}
+                                        {isWidthDown("sm", width) ? (
+                                            <PersonOutlined />
+                                        ) : (
+                                            "로그인"
+                                        )}
                                     </Button>
                                 </Link>
-                            ))}
+                            ) : (
+                                <Link to="/mypage">
+                                    <Button
+                                        variant="outlined"
+                                        className={classes.buttonStyle}
+                                    >
+                                        {isWidthDown("sm", width) ? (
+                                            <PersonOutlined />
+                                        ) : (
+                                            user.firstName +
+                                            "  " +
+                                            user.lastName
+                                        )}
+                                    </Button>
+                                </Link>
+                            )}
+
+                            <Link to="/cart">
+                                <Button
+                                    variant="outlined"
+                                    className={classes.buttonStyle}
+                                >
+                                    {isWidthDown("sm", width) ? (
+                                        <ShoppingCartOutlined />
+                                    ) : (
+                                        "장바구니"
+                                    )}
+                                </Button>
+                            </Link>
                         </div>
                     </Grid>
                 </div>

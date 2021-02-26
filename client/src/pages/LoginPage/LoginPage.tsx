@@ -1,20 +1,31 @@
 import { Button, Paper, TextField } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PageContainer from "../../components/Container/PageContainer/PageContainer";
 import * as Yup from "yup";
 import useStyles from "./styles";
 import { LoginRequest } from "../../types/Request";
 import { ErrorResponse, LoginResponse } from "../../types/Response";
-import { api, cookie } from "../../lib/axios";
+import { cookie } from "../../lib/cookies";
 import { showMessage } from "../../redux/actions/MessageAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { axiosConfigs } from "../../configs/axios";
+import axios from "axios";
+import { setUser } from "../../redux/actions/UserAction";
+import { RootReducerType } from "../../redux/reducers/rootReducer";
 
 const LoginPage = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector((state: RootReducerType) => state.user);
+
+    useEffect(() => {
+        if (user.isAuthenticated) {
+            history.push("/");
+        }
+    });
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -25,11 +36,13 @@ const LoginPage = () => {
 
     const loginRequest = (data: LoginRequest) => {
         // use promise cuz in typescript does not support err in catch phraise type yet
-        api.post("/user/login", data)
+        axios
+            .post("/user/login", data, axiosConfigs)
             .then((r) => r.data as LoginResponse)
             .then((response) => {
                 cookie.set("X-TOKEN", response.token);
                 dispatch(showMessage(response.message, "info"));
+                dispatch(setUser(response.user));
                 history.push("/");
             })
             .catch((err: ErrorResponse) => {
@@ -44,10 +57,7 @@ const LoginPage = () => {
                 <Formik
                     initialValues={{ email: "", password: "" }}
                     validationSchema={validationSchema}
-                    onSubmit={(data) => {
-                        console.log(data);
-                        loginRequest(data);
-                    }}
+                    onSubmit={loginRequest}
                 >
                     {({ handleChange, errors, touched }) => (
                         <Form className={classes.formContainer}>

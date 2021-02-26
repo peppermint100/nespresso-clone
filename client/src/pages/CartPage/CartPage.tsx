@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const CartPage = () => {
-    return (
-        <div>
-            cart page
-        </div>
-    )
-}
+    return <div>cart page</div>;
+};
 
-export default CartPage
+export default CartPage;

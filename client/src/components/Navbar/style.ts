@@ -51,15 +51,15 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     buttonStyle: {
-        width: "150px",
+        width: "100px",
         borderColor: "#fff",
         color: "#fff",
         marginLeft: "5px",
         [theme.breakpoints.down("sm")]: {
             width: "40px",
-            marginLeft: "10px",
+            marginLeft: "5px",
         },
-        [theme.breakpoints.down("md")]: {
+        [theme.breakpoints.up("md")]: {
             width: "110px",
         },
     },
@@ -84,8 +84,14 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     listItemIcon: {
-        color: theme.palette.secondary.light,
+        color: "#fff" 
     },
+    listItemText: {
+        fontSize: "10px",
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "10px"
+        }
+    }
 }));
 
 export default useStyles;

@@ -43,10 +43,12 @@ const LoginPage = () => {
                 cookie.set("X-TOKEN", response.token);
                 dispatch(showMessage(response.message, "info"));
                 dispatch(setUser(response.user));
-                history.push("/");
+                // history.push("/");
             })
             .catch((err: ErrorResponse) => {
-                dispatch(showMessage(err.response.data.message, "warning"));
+                if (err.response) {
+                    dispatch(showMessage(err.response.data.message, "warning"));
+                }
             });
     };
 

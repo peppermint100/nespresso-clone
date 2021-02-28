@@ -1,4 +1,5 @@
-import { UserState } from './../redux/actions/UserAction';
+import { Capsule, Machine } from './Item';
+import { UserState } from "./User"
 
 export type BasicResponse = {
   message: string,
@@ -25,4 +26,12 @@ export type ErrorResponse = {
         timestampe: string
     }
   }
+}
+
+export type GetCapsuleResponse = BasicResponse & {
+  capsules: Array<Capsule>
+}
+
+export type GetMachineResponse = BasicResponse & {
+  machines: Array<Machine>
 }

@@ -7,6 +7,7 @@ import {
     Grid,
     Hidden,
     isWidthDown,
+    isWidthUp,
     List,
     ListItem,
     ListItemIcon,
@@ -25,6 +26,7 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import useStyles from "./style";
+import { getUserLS } from "../../lib/localStorage";
 import { useSelector } from "react-redux";
 import { RootReducerType } from "../../redux/reducers/rootReducer";
 
@@ -36,6 +38,7 @@ const Navbar: React.FC<Props> = ({ width }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [drawerState, setDrawerState] = useState(false);
+    const userLS = getUserLS();
     const user = useSelector((state: RootReducerType) => state.user);
 
     const menuInfo = [
@@ -76,19 +79,19 @@ const Navbar: React.FC<Props> = ({ width }) => {
                                                 key={menu.text}
                                                 to={menu.to}
                                                 style={{
-                                                    color:
-                                                        theme.palette.secondary
-                                                            .light,
+                                                    color: "#fff",
                                                 }}
                                             >
                                                 <ListItem button>
-                                                    <ListItemIcon
-                                                        className={
-                                                            classes.listItemIcon
-                                                        }
-                                                    >
-                                                        {menu.icon}
-                                                    </ListItemIcon>
+                                                    {isWidthUp("sm", width) && (
+                                                        <ListItemIcon
+                                                            className={
+                                                                classes.listItemIcon
+                                                            }
+                                                        >
+                                                            {menu.icon}
+                                                        </ListItemIcon>
+                                                    )}
                                                     <ListItemText
                                                         primary={menu.text}
                                                     />
@@ -133,9 +136,9 @@ const Navbar: React.FC<Props> = ({ width }) => {
                                         {isWidthDown("sm", width) ? (
                                             <PersonOutlined />
                                         ) : (
-                                            user.firstName +
-                                            "  " +
-                                            user.lastName
+                                            userLS.firstName +
+                                            " " +
+                                            userLS.lastName
                                         )}
                                     </Button>
                                 </Link>

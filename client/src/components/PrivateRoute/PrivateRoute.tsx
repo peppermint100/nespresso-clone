@@ -3,11 +3,13 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { axiosConfigs } from "../../configs/axios";
 import { showMessage } from "../../redux/actions/MessageAction";
-import { setUser, UserState } from "../../redux/actions/UserAction";
+import { setUser } from "../../redux/actions/UserAction";
 import { ErrorResponse, MeResponse } from "../../types/Response";
+import { UserState } from "../../types/User";
 
 function PrivateRoute(Component: React.FC) {
     const dispatch = useDispatch();
+
     function AuthenticationCheck(props: any) {
         useEffect(() => {
             axios

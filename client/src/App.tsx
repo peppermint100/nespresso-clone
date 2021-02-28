@@ -5,17 +5,15 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import CartPage from "./pages/CartPage/CartPage";
 import { createMuiTheme, Snackbar, ThemeProvider } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { hideMessage } from "./redux/actions/MessageAction";
 import MuiAlert from "@material-ui/lab/Alert";
 import { RootReducerType } from "./redux/reducers/rootReducer";
 import { CookiesProvider } from "react-cookie";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import axios from "axios";
-import { axiosConfigs } from "./configs/axios";
-import { MeResponse } from "./types/Response";
-import { setUser, UserState } from "./redux/actions/UserAction";
+import CapsulePage from "./pages/CapsulePage/CapsulePage";
+import MachinePage from "./pages/MachinePage/MachinePage";
 
 function App() {
     const theme = createMuiTheme({
@@ -37,16 +35,6 @@ function App() {
     const closeMessage = () => {
         dispatch(hideMessage());
     };
-
-    useEffect(() => {
-        axios
-            .post("/user/me", null, axiosConfigs)
-            .then((r) => r.data)
-            .then((response: MeResponse) => {
-                const userInfo: UserState = response.userInfo;
-                dispatch(setUser(userInfo));
-            });
-    }, []);
 
     return (
         <div>
@@ -79,6 +67,8 @@ function App() {
                             path="/cart"
                             component={PrivateRoute(CartPage)}
                         />
+                        <Route exact path="/capsules" component={CapsulePage} />
+                        <Route exact path="/machines" component={MachinePage} />
                     </Router>
                 </ThemeProvider>
             </CookiesProvider>

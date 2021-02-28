@@ -29,3 +29,9 @@ export type Machine = Item & {
 export enum ItemType {
   MACHINE, CAPSULE
 }
+
+export type CartItem = {
+  amount: number,
+  cartItemId: number,
+  item: Item
+}

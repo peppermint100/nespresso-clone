@@ -14,6 +14,7 @@ import { CookiesProvider } from "react-cookie";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import CapsulePage from "./pages/CapsulePage/CapsulePage";
 import MachinePage from "./pages/MachinePage/MachinePage";
+import MyPage from "./pages/MyPage/MyPage";
 
 function App() {
     const theme = createMuiTheme({
@@ -69,6 +70,11 @@ function App() {
                         />
                         <Route exact path="/capsules" component={CapsulePage} />
                         <Route exact path="/machines" component={MachinePage} />
+                        <Route
+                            exact
+                            path="/mypage"
+                            component={PrivateRoute(MyPage)}
+                        />
                     </Router>
                 </ThemeProvider>
             </CookiesProvider>

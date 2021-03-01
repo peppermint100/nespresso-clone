@@ -7,5 +7,6 @@ export const useTabs = (initialIdx: number, allTabs: Array<Tab>) => {
     return {
         currentTab: allTabs[idx].content,
         setTab: setIdx,
+        currentName: allTabs[idx].name
     };
 };

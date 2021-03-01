@@ -2,6 +2,7 @@ import { Divider, Grid, Hidden, makeStyles, Paper } from "@material-ui/core";
 import {
     AccountCircleOutlined,
     FaceOutlined,
+    RoomOutlined,
     ShoppingBasketOutlined,
 } from "@material-ui/icons";
 import axios from "axios";
@@ -9,61 +10,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import PageContainer from "../../components/Container/PageContainer/PageContainer";
 import MyOrder from "../../components/MyOrder/MyOrder";
+import UpdateAddressForm from "../../components/UpdateAddressForm/UpdateAddressForm";
 import UpdateUserForm from "../../components/UpdateUserForm/UpdateUserForm";
 import { axiosConfigs } from "../../configs/axios";
 import { useTabs } from "../../lib/Hooks";
 import { showMessage } from "../../redux/actions/MessageAction";
-import { Order, OrderItem } from "../../types/Item";
+import { Order } from "../../types/Item";
 import { ErrorResponse, GetOrderResponse } from "../../types/Response";
 import { Tab } from "../../types/Utils";
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        margin: "20px 0",
-    },
-    listContainer: {
-        height: 450,
-        [theme.breakpoints.down("sm")]: {
-            display: "flex",
-            height: 80,
-        },
-    },
-    listItem: {
-        marginTop: "5px",
-        cursor: "pointer",
-        [theme.breakpoints.up("md")]: {
-            "&:hover": {
-                backgroundColor: theme.palette.grey[400],
-            },
-        },
-        [theme.breakpoints.between("xs", "md")]: {
-            display: "flex",
-            height: 80,
-            "&:hover": {
-                color: theme.palette.grey[400],
-            },
-        },
-    },
-    listIcon: {
-        height: "70px",
-        lineHeight: "70px",
-        display: "inline-block",
-        transform: "translateY(10%)",
-        marginLeft: "10px",
-    },
-    listItemName: {
-        marginLeft: "10px",
-        fontSize: "14px",
-        height: "70px",
-        lineHeight: "70px",
-        [theme.breakpoints.down("sm")]: {
-            fontSize: "15px",
-        },
-    },
-    content: {
-        minHeight: 450,
-    },
-}));
+import useStyles from "./styles";
 
 const MyPage = () => {
     const classes = useStyles();
@@ -77,13 +32,18 @@ const MyPage = () => {
             icon: <ShoppingBasketOutlined />,
         },
         {
-            name: "내 정보",
+            name: "개인 정보",
             content: <UpdateUserForm />,
             icon: <AccountCircleOutlined />,
         },
+        {
+            name: "나의 주소",
+            content: <UpdateAddressForm />,
+            icon: <RoomOutlined />,
+        },
     ];
 
-    const { currentTab, setTab } = useTabs(0, tabContent);
+    const { currentTab, setTab, currentName } = useTabs(0, tabContent);
 
     useEffect(() => {
         axios
@@ -123,6 +83,9 @@ const MyPage = () => {
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={9}>
+                    <header className={classes.formHeader}>
+                        {currentName}
+                    </header>
                     <Paper className={classes.content}>{currentTab}</Paper>
                 </Grid>
             </Grid>

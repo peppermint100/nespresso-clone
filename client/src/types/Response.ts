@@ -1,4 +1,4 @@
-import { Capsule, CartItem, Machine } from './Item';
+import { Capsule, CartItem, Machine, Order, OrderItem } from './Item';
 import { UserState } from "./User"
 
 export type BasicResponse = {
@@ -38,4 +38,10 @@ export type GetMachineResponse = BasicResponse & {
 
 export type GetCartItemResponse = BasicResponse & {
   cartItems: Array<CartItem>
+}
+
+export type GetOrderResponse = BasicResponse & {
+  orderItemId: number,
+  createdAt: string,
+  orders: Array<Order>
 }

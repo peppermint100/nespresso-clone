@@ -143,6 +143,7 @@ const CartPage = () => {
                                         </TableCell>
                                         <TableCell align="right">
                                             <CloseOutlined
+                                                className={classes.deleteButton}
                                                 onClick={() =>
                                                     deleteItem(
                                                         cartItem.cartItemId

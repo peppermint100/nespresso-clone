@@ -35,3 +35,15 @@ export type CartItem = {
   cartItemId: number,
   item: Item
 }
+
+export type Order = {
+  orderId: number,
+  createdAt: string,
+  orderItems: Array<OrderItem>
+}
+
+export type OrderItem = {
+  orderItemId: number,
+  amount: number,
+  item: Item
+}

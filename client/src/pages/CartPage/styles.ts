@@ -38,10 +38,11 @@ const useStyles = makeStyles((theme) => ({
     amount: {},
     total: {},
     deleteButton: {
-        width: "120px",
-        height: "40px",
-        backgroundColor: theme.palette.error.main,
-        color: "#fff",
+        cursor: "pointer",
+        transition: "opacity .2s ease-in-out",
+        "&:hover":{
+            opacity: .5
+        }
     },
     orderConfirmContainer: {
         display: "flex",

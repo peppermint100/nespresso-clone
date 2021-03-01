@@ -1,5 +1,6 @@
 package io.peppermint100.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
@@ -28,4 +30,5 @@ public class CartItem {
         this.amount = amount;
         this.item = item;
     }
+
 }

@@ -1,17 +1,17 @@
 package io.peppermint100.server.controller;
 
 import io.peppermint100.server.constant.Controller;
+import io.peppermint100.server.entity.Order;
 import io.peppermint100.server.entity.OrderItem;
 import io.peppermint100.server.entity.Response.BasicResponse;
 import io.peppermint100.server.entity.Response.Order.GetOrderByUserIdResponse;
+import io.peppermint100.server.entity.Response.Order.OrderItemResponse;
 import io.peppermint100.server.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ public class OrderController {
     // get orders by userid
     @GetMapping("")
     public ResponseEntity<GetOrderByUserIdResponse> getOrderByUserId(){
-        List<OrderItem> orderList = orderService.getOrderByUserId();
+        List<Order> orders = orderService.getOrderByUserId();
 
-        GetOrderByUserIdResponse response = new GetOrderByUserIdResponse(HttpStatus.OK, Controller.GET_ORDER_SUCCESS_MESSAGE, orderList);
+        GetOrderByUserIdResponse response = new GetOrderByUserIdResponse(HttpStatus.OK, Controller.GET_ORDER_SUCCESS_MESSAGE, orders);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

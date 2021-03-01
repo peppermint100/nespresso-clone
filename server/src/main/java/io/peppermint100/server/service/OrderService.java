@@ -1,15 +1,16 @@
 package io.peppermint100.server.service;
 
-import io.peppermint100.server.entity.CartItem;
-import io.peppermint100.server.entity.OrderItem;
-import io.peppermint100.server.entity.User;
+import io.peppermint100.server.entity.*;
 import io.peppermint100.server.exception.Order.EmptyCartException;
 import io.peppermint100.server.exception.Order.FailToGetOrderException;
 import io.peppermint100.server.exception.User.UserNotExistException;
 import io.peppermint100.server.repository.CartItemRepository;
 import io.peppermint100.server.repository.OrderItemRepository;
+import io.peppermint100.server.repository.OrderRepository;
 import io.peppermint100.server.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,24 +23,25 @@ public class OrderService {
 
     private OrderItemRepository orderItemRepository;
     private CartItemRepository cartItemRepository;
+    private OrderRepository orderRepository;
     private UserRepository userRepository;
 
-    public List<OrderItem> getOrderByUserId() {
+    public List<Order> getOrderByUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        Long userId = 1L;
+        Long userId = userDetails.getUserId();
 
-        Optional<List<OrderItem>> orderList = orderItemRepository.getOrderByUserId(userId);
+        List<Order> orders = orderRepository.getOrdersByUserId(userId);
 
-        if (orderList.isEmpty()){
-            throw new FailToGetOrderException();
-        }
-
-        return orderList.get();
+        return orders;
     }
 
     public void makeOrder() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        Long userId = 1L;
+        Long userId = userDetails.getUserId();
 
         List<CartItem> cartItems = cartItemRepository.getCartItemsByUserId(userId);
 
@@ -50,14 +52,19 @@ public class OrderService {
         }
 
         List<OrderItem> orderItems = new ArrayList<>();
+        Order newOrder = new Order();
 
         // order_id, oc_fid는 null로 지정되어 있는데 그 부분을 또 manytoone으로 생성하려 하므로 생기는 오류 @order post
         for(CartItem item : cartItems){
-            OrderItem orderItem = new OrderItem(user, item.getItem(), item.getAmount());
+            OrderItem orderItem = new OrderItem(newOrder, item.getItem(), item.getAmount());
             orderItems.add(orderItem);
         }
 
-        orderItemRepository.saveAll(orderItems);
+        newOrder.setUser(user);
+        newOrder.setOrderItems(orderItems);
+
+        orderRepository.save(newOrder);
         cartItemRepository.deleteAll();
     }
+
 }

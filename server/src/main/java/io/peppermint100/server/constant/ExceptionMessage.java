@@ -17,4 +17,5 @@ public class ExceptionMessage {
     public static final String UNEXCEPTABLE_VALUE_EXCEPTION_MESSAGE = "유효하지 않은 값입니다.";
     public static final String GET_ORDER_FAIL_MESSAGE = "주문 정보를 불러오는데 실패했습니다.";
     public static final String EMPTY_CART_EXCEPTION_MESSAGE = "장바구니가 비어있습니다.";
+    public static final String UNAUTHORIZED_EXCEPTION_MESSAGE = "로그인이 필요합니다.";
 }

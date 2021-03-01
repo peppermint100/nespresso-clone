@@ -1,6 +1,7 @@
 package io.peppermint100.server.service;
 
 import io.peppermint100.server.entity.CartItem;
+import io.peppermint100.server.entity.CustomUserDetails;
 import io.peppermint100.server.entity.Item;
 import io.peppermint100.server.entity.Request.CartItem.AddToCartRequest;
 import io.peppermint100.server.entity.Request.CartItem.UpdateCartItemRequest;
@@ -13,6 +14,8 @@ import io.peppermint100.server.repository.CartItemRepository;
 import io.peppermint100.server.repository.ItemRepository;
 import io.peppermint100.server.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +32,11 @@ public class CartItemService {
     public void addToCart(AddToCartRequest addToCartRequest){
         // authentication to get user id
 
-        Long userId = 1L;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        Long userId = userDetails.getUserId();
+
         Long itemId = addToCartRequest.getItemId();
         Integer amount = addToCartRequest.getAmount();
 
@@ -65,7 +72,11 @@ public class CartItemService {
     }
 
     public List<CartItem> getAllCartItemsByUserId() {
-        Long userId = 1L;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        Long userId = userDetails.getUserId();
+
 
         List<CartItem> cartItems = cartItemRepository.getCartItemsByUserId(userId);
 
@@ -73,7 +84,10 @@ public class CartItemService {
     }
 
     public void deleteCartItem(Long itemId) {
-        Long userId = 1L;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        Long userId = userDetails.getUserId();
 
         // if cartItem already have item
         Optional<CartItem> cartItemMaybe = cartItemRepository.existingCartItemByItemId(itemId);

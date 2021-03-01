@@ -1,5 +1,7 @@
 package io.peppermint100.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,28 +11,26 @@ import java.time.LocalDateTime;
 
 @Data
 @RequiredArgsConstructor
-@Entity(name = "ORDER_TABLE")
+@Entity(name = "ORDER_ITEM_TABLE")
 public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
-
-    @CreationTimestamp
-    private LocalDateTime createAt;
+    private Long orderItemId;
 
     private Integer amount;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
 
-    public OrderItem(User user, Item item, Integer amount){
-        this.user = user;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    @JsonBackReference
+    private Order order;
+
+    public OrderItem(Order order, Item item, Integer amount){
+        this.order = order;
         this.item = item;
         this.amount = amount;
     }

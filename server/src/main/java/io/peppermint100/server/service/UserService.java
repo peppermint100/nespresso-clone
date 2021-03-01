@@ -108,7 +108,7 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(email);
 
         if(user.isEmpty()){
-            throw new UserNotExistException();
+            throw new UnauthorizaedException();
         }
 
         userInfo = new UserInfo(

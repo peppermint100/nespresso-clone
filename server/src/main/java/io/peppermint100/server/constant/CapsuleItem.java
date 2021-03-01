@@ -49,8 +49,8 @@ public class CapsuleItem {
     public static final String NAPLES_ITEM_NAME = "나폴리";
     public static final Integer NAPLES_PRICE = 590;
     public static final String NAPLES_DESCRIPTION = "오랜 시간 다크 로스팅한 강렬한 로스팅향을 지닌 커피";
-    public static final String NAPLES_ITEM_IMAGE = "";
-    public static final String NAPLES_ITEM_DETAIL_IMAGE = "";
+    public static final String NAPLES_ITEM_IMAGE = "https://www.nespresso.com/ecom/medias/sys_master/public/12807335641118/Desktop-Standard-2000x2000.png?impolicy=product&imwidth=65";
+    public static final String NAPLES_ITEM_DETAIL_IMAGE = "https://www.nespresso.com/ecom/medias/sys_master/public/13769565995038/C-0471-Main-PDP-IspirazioneItaliana-Napoli-OL.jpg?impolicy=productPdpMainDefault&imwidth=1568";
     public static final Integer NAPLES_INTENSITY = 12;
     public static final CupSize NAPLES_CUP_SIZE = CupSize.ESPRESSO;
     public static final String NAPLES_PROFILE = "https://www.nespresso.com/ecom/medias/sys_master/public/12807335641118/Desktop-Standard-2000x2000.png?impolicy=product&imwidth=65";

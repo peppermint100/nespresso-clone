@@ -14,13 +14,17 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "USER_TABLE")
 public class User {
-    @Id
+    @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
     private String email;
     private String firstName;
     private String lastName;
+
+    @JsonIgnore
     private String password;
+
     private String address;
 
     @OneToMany(
@@ -36,8 +40,7 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JsonIgnore
-    private List<OrderItem> orderList = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     public User(String email, String firstName, String lastName, String password, String address) {
         this.email = email;

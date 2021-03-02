@@ -1,7 +1,6 @@
 import {
     Button,
     Hidden,
-    makeStyles,
     Paper,
     Table,
     TableBody,
@@ -72,7 +71,7 @@ const CartPage = () => {
                     console.log(e.response.data.message);
                 }
             });
-    }, []);
+    }, [dispatch]);
 
     return (
         <PageContainer>

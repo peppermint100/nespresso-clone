@@ -9,7 +9,6 @@ interface Props {
 
 const MyOrder: React.FC<Props> = ({ orders }) => {
     const classes = useStyles();
-    console.log(orders);
     return (
         <div className={classes.container}>
             {orders.map((order) => (

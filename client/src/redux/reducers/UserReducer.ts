@@ -23,7 +23,7 @@ function userReducer(state = initialState, action: UserActionTypes): UserState{
       });
 
       return {
-        isAuthenticated: true,
+        isAuthenticated: action.isAuthenticated,
         userId: action.userId,
         firstName: action.firstName,
         lastName: action.lastName,

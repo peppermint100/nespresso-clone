@@ -11,10 +11,12 @@ import { hideMessage } from "./redux/actions/MessageAction";
 import MuiAlert from "@material-ui/lab/Alert";
 import { RootReducerType } from "./redux/reducers/rootReducer";
 import { CookiesProvider } from "react-cookie";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import CapsulePage from "./pages/CapsulePage/CapsulePage";
 import MachinePage from "./pages/MachinePage/MachinePage";
 import MyPage from "./pages/MyPage/MyPage";
+import AuthRoute from "./components/PrivateRoute/AuthRoute";
+import CapsuleDetailPage from "./pages/DetailPage/CapsuleDetailPage";
+import MachineDetailPage from "./pages/DetailPage/MachineDetailPage";
 
 function App() {
     const theme = createMuiTheme({
@@ -24,7 +26,6 @@ function App() {
             },
             secondary: {
                 main: "#535c68",
-                // light: "#bdc3c7",
             },
         },
     });
@@ -63,18 +64,20 @@ function App() {
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/signup" component={SignUpPage} />
-                        <Route
-                            exact
-                            path="/cart"
-                            component={PrivateRoute(CartPage)}
-                        />
+                        <AuthRoute exact path="/cart" component={CartPage} />
                         <Route exact path="/capsules" component={CapsulePage} />
                         <Route exact path="/machines" component={MachinePage} />
                         <Route
                             exact
-                            path="/mypage"
-                            component={PrivateRoute(MyPage)}
+                            path="/capsule/:itemId"
+                            component={CapsuleDetailPage}
                         />
+                        <Route
+                            exact
+                            path="/machine/:itemId"
+                            component={MachineDetailPage}
+                        />
+                        <AuthRoute exact path="/mypage" component={MyPage} />
                     </Router>
                 </ThemeProvider>
             </CookiesProvider>

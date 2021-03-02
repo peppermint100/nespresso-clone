@@ -42,7 +42,7 @@ const LoginPage = () => {
             .then((response) => {
                 cookie.set("X-TOKEN", response.token);
                 dispatch(showMessage(response.message, "info"));
-                dispatch(setUser(response.user));
+                dispatch(setUser({ ...response.user, isAuthenticated: true }));
                 // history.push("/");
             })
             .catch((err: ErrorResponse) => {

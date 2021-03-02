@@ -1,7 +1,4 @@
 import Cookies, { Cookie } from "universal-cookie"
 
-export let cookie: Cookie;
+export let cookie: Cookie = new Cookies();
 
-if(!cookie){
-  cookie = new Cookies()
-}

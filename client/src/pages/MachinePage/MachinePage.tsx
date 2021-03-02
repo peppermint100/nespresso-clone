@@ -38,7 +38,7 @@ const MachinePage = () => {
 
     useEffect(() => {
         getCapsules();
-    }, []);
+    }, [dispatch]);
 
     return (
         <PageContainer>

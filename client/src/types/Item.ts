@@ -47,3 +47,7 @@ export type OrderItem = {
   amount: number,
   item: Item
 }
+
+export type DetailParamsType = {
+  itemId: string
+}

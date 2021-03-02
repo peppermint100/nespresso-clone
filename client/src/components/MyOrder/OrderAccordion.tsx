@@ -17,9 +17,9 @@ import { Order, OrderItem } from "../../types/Item";
 import useStyles from "./styles";
 
 interface Props {
-    orders: Array<Order>;
+    order: Order;
 }
-const OrderAccordion: React.FC<{ order: Order }> = ({ order }) => {
+const OrderAccordion: React.FC<Props> = ({ order }) => {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
     return (

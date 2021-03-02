@@ -6,9 +6,10 @@ interface SetUserAction extends UserState {
 
 export const SET_USER = "SET_USER"
 
-export const setUser = ({ userId, email, firstName, lastName, address }: UserState): UserActionTypes => {
+export const setUser = ({ isAuthenticated, userId, email, firstName, lastName, address }: UserState): UserActionTypes => {
   return {
     type: SET_USER,
+    isAuthenticated,
     userId,
     email,
     firstName,

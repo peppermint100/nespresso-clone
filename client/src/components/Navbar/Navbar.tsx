@@ -12,7 +12,6 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    useTheme,
     withWidth,
 } from "@material-ui/core";
 import Logo from "./../../assets/logo-white.svg";
@@ -36,7 +35,6 @@ interface Props {
 
 const Navbar: React.FC<Props> = ({ width }) => {
     const classes = useStyles();
-    const theme = useTheme();
     const [drawerState, setDrawerState] = useState(false);
     const userLS = getUserLS();
     const user = useSelector((state: RootReducerType) => state.user);
@@ -114,7 +112,7 @@ const Navbar: React.FC<Props> = ({ width }) => {
                     <Grid xs={5} item />
                     <Grid xs={5} item className={classes.navTopRight}>
                         <div className={classes.buttonContainer}>
-                            {user && !!!user.isAuthenticated ? (
+                            {user && !user.isAuthenticated ? (
                                 <Link to="/login">
                                     <Button
                                         variant="outlined"

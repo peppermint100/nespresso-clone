@@ -45,3 +45,7 @@ export type GetOrderResponse = BasicResponse & {
   createdAt: string,
   orders: Array<Order>
 }
+
+export type GetItemResponse<T> = BasicResponse & {
+  item: T
+}

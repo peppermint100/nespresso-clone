@@ -1,7 +1,6 @@
 package io.peppermint100.server.controller;
 
 import io.peppermint100.server.constant.Controller;
-import io.peppermint100.server.constant.Util;
 import io.peppermint100.server.entity.Request.User.LoginRequest;
 import io.peppermint100.server.entity.Request.User.SignUpRequest;
 import io.peppermint100.server.entity.Request.User.UpdateAddressRequest;
@@ -12,15 +11,10 @@ import io.peppermint100.server.entity.Response.User.MeResponse;
 import io.peppermint100.server.entity.Response.User.TokenAndUser;
 import io.peppermint100.server.entity.Response.User.UserInfo;
 import io.peppermint100.server.service.UserService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")

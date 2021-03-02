@@ -92,7 +92,7 @@ public class CartItemService {
         // if cartItem already have item
         Optional<CartItem> cartItemMaybe = cartItemRepository.existingCartItemByItemId(itemId);
 
-        if(cartItemMaybe.isEmpty()){
+        if(!cartItemMaybe.isPresent()){
             throw new UnexceptableValueException();
         }
 

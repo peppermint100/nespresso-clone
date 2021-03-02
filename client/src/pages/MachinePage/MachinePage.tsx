@@ -22,7 +22,6 @@ const MachinePage = () => {
             .get("/item/machines", axiosConfigs)
             .then((r) => r.data)
             .then((response: GetMachineResponse) => {
-                console.log(response);
                 setMachines(response.machines);
             })
             .catch((e: ErrorResponse) => {

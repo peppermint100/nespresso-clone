@@ -51,7 +51,6 @@ const MachineDetailPage: React.FC<Props> = ({}) => {
             .get(`/item/${params.itemId}`, axiosConfigs)
             .then((r) => r.data)
             .then((response: GetItemResponse<Machine>) => {
-                console.log(response);
                 setDetail(response.item);
             });
     }, []);
@@ -60,7 +59,7 @@ const MachineDetailPage: React.FC<Props> = ({}) => {
             <Grid container spacing={2} className={classes.container}>
                 <Grid item sm={12} md={8}>
                     <img
-                        className={classes.img}
+                        className={classes.machineImg}
                         src={detail.itemDetailImage}
                         alt="detail"
                     />

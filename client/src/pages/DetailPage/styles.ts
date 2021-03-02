@@ -5,12 +5,22 @@ const useStyles = makeStyles((theme) => ({
         height: 650,
         margin: "30px 0",
     },
-    img: {
+    capsuleImg: {
         width: "100%",
         height: "100%",
         objectFit: "cover",
         transform: "scale(.9, .9)",
         objectPosition: "83% 0%",
+        [theme.breakpoints.down("sm")]: {
+            width: "80%",
+        },
+    },
+machineImg: {
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        transform: "scale(.9, .9)",
+        objectPosition: "80% 0%",
         [theme.breakpoints.down("sm")]: {
             width: "80%",
         },

@@ -12,10 +12,11 @@ import {
 import { CloseOutlined } from "@material-ui/icons";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PageContainer from "../../components/Container/PageContainer/PageContainer";
 import { axiosConfigs } from "../../configs/axios";
 import { showMessage } from "../../redux/actions/MessageAction";
+import { RootReducerType } from "../../redux/reducers/rootReducer";
 import { CartItem } from "../../types/Item";
 import {
     BasicResponse,
@@ -30,6 +31,7 @@ const CartPage = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const totalRef = useRef(0);
     const dispatch = useDispatch();
+    const message = useSelector((state: RootReducerType) => state.message);
 
     const deleteItem = (cartItemId: number) => {
         axios
@@ -71,7 +73,7 @@ const CartPage = () => {
                     console.log(e.response.data.message);
                 }
             });
-    }, [dispatch]);
+    }, [message.message]);
 
     return (
         <PageContainer>

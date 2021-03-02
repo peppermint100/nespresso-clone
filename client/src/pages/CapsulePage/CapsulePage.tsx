@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import CapsuleListItem from "../../components/Capsule/CapsuleListItem";
@@ -21,7 +21,7 @@ const CapsulePage = () => {
     };
 
     const [capsules, setCapsules] = useState<Array<Capsule>>([]);
-    const getCapsules = () => {
+    const getCapsules = useCallback(() => {
         axios
             .get("/item/capsules", axiosConfigs)
             .then((r) => r.data)
@@ -33,11 +33,11 @@ const CapsulePage = () => {
                     dispatch(showMessage(e.response.data.message, "warning"));
                 }
             });
-    };
+    }, [dispatch]);
 
     useEffect(() => {
         getCapsules();
-    }, []);
+    }, [getCapsules]);
 
     return (
         <PageContainer>

@@ -11,9 +11,7 @@ import { Capsule, CupSize, DetailParamsType, ItemType } from "../../types/Item";
 import { GetItemResponse } from "../../types/Response";
 import useStyles from "./styles";
 
-interface Props {}
-
-const CapsuleDetailPage: React.FC<Props> = ({}) => {
+const CapsuleDetailPage = () => {
     const classes = useStyles();
     const params = useParams<DetailParamsType>();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,7 +48,7 @@ const CapsuleDetailPage: React.FC<Props> = ({}) => {
             .then((response: GetItemResponse<Capsule>) => {
                 setDetail(response.item);
             });
-    }, []);
+    }, [params.itemId]);
     return (
         <PageContainer>
             <Grid container spacing={2} className={classes.container}>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PageContainer from "../../components/Container/PageContainer/PageContainer";
@@ -17,7 +17,7 @@ const MachinePage = () => {
     const classes = useStyles();
 
     const [machines, setMachines] = useState<Array<Machine>>([]);
-    const getCapsules = () => {
+    const getCapsules = useCallback(() => {
         axios
             .get("/item/machines", axiosConfigs)
             .then((r) => r.data)
@@ -29,7 +29,7 @@ const MachinePage = () => {
                     dispatch(showMessage(e.response.data.message, "warning"));
                 }
             });
-    };
+    }, [dispatch]);
 
     const toDetailPage = (itemId: number) => {
         history.push(`/machine/${itemId}`);
@@ -37,7 +37,7 @@ const MachinePage = () => {
 
     useEffect(() => {
         getCapsules();
-    }, [dispatch]);
+    }, [dispatch, getCapsules]);
 
     return (
         <PageContainer>

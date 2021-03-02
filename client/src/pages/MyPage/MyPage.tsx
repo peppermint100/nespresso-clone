@@ -1,4 +1,4 @@
-import { Button, Grid, Hidden, Paper } from "@material-ui/core";
+import { Grid, Hidden, Paper } from "@material-ui/core";
 import {
     AccountCircleOutlined,
     PowerSettingsNewRounded,
@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PageContainer from "../../components/Container/PageContainer/PageContainer";
 import MyOrder from "../../components/MyOrder/MyOrder";
 import UpdateAddressForm from "../../components/UpdateAddressForm/UpdateAddressForm";
@@ -76,7 +76,7 @@ const MyPage = () => {
             .catch((e: ErrorResponse) => {
                 dispatch(showMessage(e.response.data.message, "warning"));
             });
-    }, []);
+    }, [dispatch]);
 
     return (
         <PageContainer>

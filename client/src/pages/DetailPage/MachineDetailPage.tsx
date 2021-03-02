@@ -8,8 +8,6 @@ import PageContainer from "../../components/Container/PageContainer/PageContaine
 import { axiosConfigs } from "../../configs/axios";
 import { RootReducerType } from "../../redux/reducers/rootReducer";
 import {
-    Capsule,
-    CupSize,
     DetailParamsType,
     ItemType,
     Machine,
@@ -18,9 +16,7 @@ import {
 import { GetItemResponse } from "../../types/Response";
 import useStyles from "./styles";
 
-interface Props {}
-
-const MachineDetailPage: React.FC<Props> = ({}) => {
+const MachineDetailPage = () => {
     const classes = useStyles();
     const params = useParams<DetailParamsType>();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -53,7 +49,7 @@ const MachineDetailPage: React.FC<Props> = ({}) => {
             .then((response: GetItemResponse<Machine>) => {
                 setDetail(response.item);
             });
-    }, []);
+    }, [params.itemId]);
     return (
         <PageContainer>
             <Grid container spacing={2} className={classes.container}>
@@ -75,7 +71,7 @@ const MachineDetailPage: React.FC<Props> = ({}) => {
                                     타입 :
                                 </label>
                                 <span className={classes.detailContent}>
-                                    {detail.machineType == MachineType.ORIGINAL
+                                    {detail.machineType === MachineType.ORIGINAL
                                         ? "오리지널 머신"
                                         : "버츄오 머신"}
                                 </span>

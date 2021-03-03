@@ -1,25 +1,5 @@
-## Description
-Nespresso Website Clone
-
-## Init
-```
-1. clone project
-2. load maven dependemcies
-3. edit yml file(your database configs)
-4. run main class
-5. test API with Postman
-```
-
-## Stack
-- React
-- Typescript
-- TailwindCSS
-- Spring Boot
-- Spring Security(JWT)
-- JPA
-- MySQL
-
 ## DB
+
 ```
 User {
 	userId: Long; <PK>
@@ -30,7 +10,7 @@ User {
 	address: String;
 
 	@OneToOne
-	cartId: Long; <FK> 
+	cartId: Long; <FK>
 }
 
 @PostConstruct
@@ -40,7 +20,7 @@ Item {
 	price: Int;
 	description: String;
 	itemImage: Array<String>;
-	
+
 	@OneToMany()
 	cartItemId: Long; <FK>
 	cartItem: CartItem;
@@ -102,6 +82,7 @@ Order {
 ```
 
 ## API
+
 ```
 - User
 1. login
@@ -233,6 +214,3 @@ input{
     token: header
 }
 ```
-
-
-
